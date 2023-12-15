@@ -1,6 +1,6 @@
 // reducer.js
 import { createReducer } from "@reduxjs/toolkit";
-import * as ActionTypes from "./ActionTypes";
+import * as ActionTypes from "./actionTypes";
 
 const initialState = {
   items: [],

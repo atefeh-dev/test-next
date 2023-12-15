@@ -1,26 +1,33 @@
-// components/TodoItem.js
-import { removeItem, toggleItem } from "@/redux/actions";
-import React from "react";
+// // TodoItem.js
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-const TodoItem = ({ todo }) => {
-  if (!todo || !todo.id) {
-    return null;
-  }
+import { toggleItem } from "@/redux/actions";
 
+const TodoItem = ({ todo }) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleRemoveTodo = () => {
-    dispatch(removeItem(todo.id));
-  };
+  const handleToggleTodo = async () => {
+    if (!loading) {
+      setLoading(true);
 
-  const handleToggleTodo = () => {
-    dispatch(toggleItem(todo.id));
+      // Simulate API call with a timeout
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      dispatch(toggleItem(todo.id));
+      setLoading(false);
+    }
   };
 
   return (
     <li>
-      <input type="checkbox" checked={todo.done} onChange={handleToggleTodo} />
-      {todo.text} <button onClick={handleRemoveTodo}>Remove</button>
+      <input
+        type="checkbox"
+        checked={todo.done}
+        onChange={handleToggleTodo}
+        disabled={loading}
+      />
+      {todo.text}
     </li>
   );
 };
